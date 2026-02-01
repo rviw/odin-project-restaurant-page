@@ -9,21 +9,29 @@ function clearContent() {
     content.textContent = "";
 }
 
-loadHome();
+function setActiveButton(button) {
+    const buttons = document.querySelectorAll("nav button");
+    buttons.forEach((btn) => btn.classList.remove("active"));
+    button.classList.add("active");
+}
 
-const buttons = document.querySelectorAll("nav button");
-
-buttons[0].addEventListener("click", () => {
+function loadTab(loadFn, button) {
     clearContent();
-    loadHome();
-});
+    loadFn();
+    setActiveButton(button);
+}
 
-buttons[1].addEventListener("click", () => {
-    clearContent();
-    loadMenu();
-});
+const homeBtn = document.querySelector('nav button[data-tab="home"]');
+loadTab(loadHome, homeBtn);
 
-buttons[2].addEventListener("click", () => {
-    clearContent();
-    loadAbout();
+const nav = document.querySelector("nav");
+nav.addEventListener("click", (e) => {
+    const btn = e.target.closest("button");
+    if (!btn) return;
+
+    const tab = btn.dataset.tab;
+
+    if (tab === "home") loadTab(loadHome, btn);
+    if (tab === "menu") loadTab(loadMenu, btn);
+    if (tab === "about") loadTab(loadAbout, btn);
 });
