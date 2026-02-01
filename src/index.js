@@ -1,3 +1,5 @@
 import "./styles.css";
 
-console.log('JavaScript is running.');
+import loadHome from "./home";
+
+loadHome();
